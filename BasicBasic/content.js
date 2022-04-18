@@ -8,9 +8,33 @@
 
 console.log("Chrome Extension Active V_2.1!");
 
+
 let paragraphs = document.getElementsByTagName('p');
 
 chrome.runtime.onMessage.addListener(gotMessage);
+
+
+
+//i think send the url from here?
+window.addEventListener('load',pageLoaded);
+
+//gets this tabs id
+function pageLoaded(){    
+    console.log("pageLoaded");
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+       var activeTab = tabs[0];
+       var activeTabId = activeTab.id;
+       console.log("tabID: " + activeTabId);
+   });
+
+
+
+    let pageName ="test"; //will change to current page name
+    let message = {
+        text: pageName
+    }
+}
+
 
 function gotMessage(message, sender, sendResponse){ 
      console.log(message.txt);
