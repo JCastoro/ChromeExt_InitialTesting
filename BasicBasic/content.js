@@ -9,40 +9,34 @@
 console.log("Chrome Extension Active V_2.1!");
 
 
-let paragraphs = document.getElementsByTagName('p');
 
-chrome.runtime.onMessage.addListener(gotMessage);
-
-
-
-//i think send the url from here?
-window.addEventListener('load',pageLoaded);
-
-//gets this tabs id
-function pageLoaded(){    
-    console.log("pageLoaded");
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-       var activeTab = tabs[0];
-       var activeTabId = activeTab.id;
-       console.log("tabID: " + activeTabId);
-   });
-
-
-
-    let pageName ="test"; //will change to current page name
-    let message = {
-        text: pageName
-    }
+//message creation
+let tabInfo = {
+    url: "Youtube.com",
+    time: "12"
 }
 
 
+//message passing
+  chrome.runtime.sendMessage(tabInfo, function(response) {
+    console.log("message sent");
+  });
+
+
+// --------------
+
+
+  let paragraphs = document.getElementsByTagName('p');
+//listening for content script to recieve a message
+chrome.runtime.onMessage.addListener(gotMessage);
+
+//what it should do once it recieves the message
 function gotMessage(message, sender, sendResponse){ 
-     console.log(message.txt);
-     
-     //doing something on button press
-     for (let elem of paragraphs){
-        elem.style.color = '#FF55FC';
-    }
+    console.log(message.txt);
+    //doing something on button press
+    for (let elem of paragraphs){
+       elem.style.color = '#FF55FC';
+   }
 }
 
 
