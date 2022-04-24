@@ -20,6 +20,7 @@
         "default_title": "This will trigger a popup"
     },
     "permissions": [
-        "tabs"
+        "tabs",
+        "storage"
     ]
 }

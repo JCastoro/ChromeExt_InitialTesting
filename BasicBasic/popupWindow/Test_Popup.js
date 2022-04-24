@@ -2,13 +2,15 @@
 
 console.log("did test_popup file run");
 
-function updateHTML(){
-    document.bgcolor="lightblue";
-}
 document.getElementById("urlsVisited").setHtml("test");
-document.getElementById('emotion_1').addEventListener("click", function()
-{
-    console.log("button clicked");
+alert(document.getElementById('emotion_1'));
+
+document.getElementById('emotion_1').addEventListener("click", function(){
+    alert("button pressed");
+    // console.log("button clicked");
+    // chrome.runtime.sendMessage(tabInfo, function(response) {
+    //     console.log("message sent from popup");
+    //   });
 });
 
 
