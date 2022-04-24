@@ -4,11 +4,9 @@
 
 //bakground script 
 // is listening for events which happen when using chrome as a piece of software itself 
-// Where we    
+
 
 console.log("Chrome Extension Active V_2.1!");
-
-
 
 //message creation
 let tabInfo = {
@@ -17,26 +15,12 @@ let tabInfo = {
 }
 
 
-//message passing
+//message passed to background
   chrome.runtime.sendMessage(tabInfo, function(response) {
     console.log("message sent");
   });
 
 
-// --------------
-
-
   let paragraphs = document.getElementsByTagName('p');
-//listening for content script to recieve a message
-chrome.runtime.onMessage.addListener(gotMessage);
-
-//what it should do once it recieves the message
-function gotMessage(message, sender, sendResponse){ 
-    console.log(message.txt);
-    //doing something on button press
-    for (let elem of paragraphs){
-       elem.style.color = '#FF55FC';
-   }
-}
 
 

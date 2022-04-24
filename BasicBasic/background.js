@@ -6,11 +6,6 @@ console.log("Background Running");
 //https://github.com/GoogleChrome/developer.chrome.com/issues/204
 
 
-
-
-
-//-----Message sending-----
-
 // Background listening for message
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
