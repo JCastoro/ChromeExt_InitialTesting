@@ -6,10 +6,12 @@ console.log("Background Running");
 
 
 //setting up storage
-
-//basic storage setup
-chrome.storage.local.set({test: "storedInfo"}, function() {
-    console.log('URL Saved as : ' + "test");
+let dummy = {
+    url: "test",
+    tabID: "test"
+};
+chrome.storage.local.set({tabList: [dummy]}, function() {
+    console.log('storaged setup as : ' + tabList);
   });
 
 
@@ -21,21 +23,14 @@ let surveyInfo = {
 }
 
 
-
-  var msgNum = 0;
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         console.log(sender.tab.url);
         if (request.url === "Youtube.com"){
             console.log("message recieved from content page");
             surveyInfo.activeTab = sender.tab.url;
-
-            chrome.storage.local.set({key: surveyInfo.activeTab}, function() {
-                console.log('URL Saved as : ' + surveyInfo.activeTab);
-              });
-
-            msgNum +=1;
         }
+
         if (request.activeTab === "placeholder"){
             console.log("message recieved from POPUP page");
         }
@@ -43,11 +38,8 @@ let surveyInfo = {
   );
 
   //basic storage retrieval
-    chrome.storage.local.get(['test'], function(result) {
-    console.log('Stored Value currently is ' + result.test);
+    chrome.storage.local.get(['tabList'], function(result) {
+    console.log('Stored Value currently is ' + result[0]);
   });
 
-  chrome.storage.local.get(['test'], function(result) {
-    console.log('Stored Value currently is ' + result.test);
-  });
 

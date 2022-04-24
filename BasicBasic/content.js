@@ -9,11 +9,13 @@
 console.log("Chrome Extension Active V_2.1!");
 
 //message creation
-let tabInfo = {
-    url: "Youtube.com",
-    time: "12"
-}
+let tabUrl = chrome.tabs.tab.url;
+let tabID = chrome.tabs.tab.url;
 
+let tabInfo = {
+    url: tabUrl,
+    ID: tabID
+}
 
 //message passed to background
   chrome.runtime.sendMessage(tabInfo, function(response) {
@@ -21,6 +23,5 @@ let tabInfo = {
   });
 
 
-  let paragraphs = document.getElementsByTagName('p');
 
 
