@@ -7,6 +7,9 @@
 
 
 console.log("Chrome Extension Active V_2.1!");
+let pageURL = document.URL;
+let currStorage = [];
+let newStorage = [];
 
 //message creation
 let tabInfo = {
@@ -14,13 +17,24 @@ let tabInfo = {
     time: "12"
 }
 
+//get the storage object
+chrome.storage.local.get(['links'], function(result) {
+  console.log('Stored Values currently are ' + result.links);
+  currStorage = result.links;
+  //update the list in storage object
+  newStorage = [...currStorage, pageURL];
+
+});
 
 //message passed to background
   chrome.runtime.sendMessage(tabInfo, function(response) {
     console.log("message sent");
+    //storage object set as new appended list
+    chrome.storage.local.set({links: newStorage}, function() {
+      console.log('Storage updated to ' + newStorage);
+      });
   });
 
 
-  chrome.storage.local.get(['links'], function(result) {
-    console.log('Stored Values currently are ' + result.links);
-  });
+
+
