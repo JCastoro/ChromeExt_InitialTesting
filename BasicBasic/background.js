@@ -8,8 +8,8 @@ console.log("Background Running");
 //setting up storage
 //do i need to check if this exists in the background storage first?? Will this wipe storage
 //after chrome is closed??
-let links_seen = ["url"];
-links_seen.push("3");
+let links_seen = [];
+//links_seen.push("3");
 
 //basic storage setup
 chrome.storage.local.set({links: links_seen}, function() {
@@ -26,14 +26,25 @@ chrome.storage.local.get(['links'], function(result) {
     function(request, sender, sendResponse) {
       //storing content pages URL
         currContentPageURL = sender.tab.url;
+        
+        //if sender URL is in our stored list
         if (request.url === "Youtube.com"){
-      
+          //increment rabbitHole counter by 1
+
           
         }
+
+        //if rabbithole counter > (some tolerance)
+        chrome.storage.local.get(['links'], function(result) {
+          let numLinksFollowed = result.links.length;
+          console.log(numLinksFollowed);
+          if(numLinksFollowed > 4){
+            chrome.tabs.create({
+              url: 'popupWindow/Test_popup.html'
+            });
+          }
+        });
+
      }
   );
 
-  //basic storage retrieval
-  //   chrome.storage.local.get(['links'], function(result) {
-  //   console.log('Stored Values currently are ' + result.links);
-  // });

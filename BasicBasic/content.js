@@ -30,6 +30,7 @@ chrome.storage.local.get(['links'], function(result) {
   chrome.runtime.sendMessage(tabInfo, function(response) {
     console.log("message sent");
     //storage object set as new appended list
+    // FOR OUR application it can just set a new list as the rabbithole Links
     chrome.storage.local.set({links: newStorage}, function() {
       console.log('Storage updated to ' + newStorage);
       });
