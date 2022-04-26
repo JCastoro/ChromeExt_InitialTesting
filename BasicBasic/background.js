@@ -10,8 +10,9 @@ let dummy = {
     url: "test",
     tabID: "test"
 };
-chrome.storage.local.set({tabList: [dummy]}, function() {
-    console.log('storaged setup as : ' + tabList);
+
+chrome.storage.local.set({"tabList": "STOREDVALUE"}, function() {
+    console.log('storage setup');
   });
 
 
@@ -38,8 +39,8 @@ let surveyInfo = {
   );
 
   //basic storage retrieval
-    chrome.storage.local.get(['tabList'], function(result) {
-    console.log('Stored Value currently is ' + result[0]);
+    chrome.storage.local.get(["tabList"], function(result) {
+    console.log('Stored Value currently is ' + result.tabList);
   });
 
 
