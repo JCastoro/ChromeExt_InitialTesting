@@ -11,27 +11,23 @@ let pageURL = document.URL;
 let currStorage = [];
 let newStorage = [];
 
-//message creation
-let tabUrl = chrome.tabs.tab.url;
-let tabID = chrome.tabs.tab.url;
-
+//message creation - This could hold more info
 let tabInfo = {
-    url: tabUrl,
-    ID: tabID
+    url: "Youtube.com"
 }
 
 //get the storage object
 chrome.storage.local.get(['links'], function(result) {
   console.log('Stored Values currently are ' + result.links);
   currStorage = result.links;
-  //update the list in storage object
+  //update the list that is being stored
   newStorage = [...currStorage, pageURL];
-
 });
 
 //message passed to background
   chrome.runtime.sendMessage(tabInfo, function(response) {
     console.log("message sent");
+
     //storage object set as new appended list
     // FOR OUR application it can just set a new list as the rabbithole Links
     chrome.storage.local.set({links: newStorage}, function() {
