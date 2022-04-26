@@ -21,6 +21,6 @@ let tabInfo = {
   });
 
 
-  let paragraphs = document.getElementsByTagName('p');
-
-
+  chrome.storage.local.get(['links'], function(result) {
+    console.log('Stored Values currently are ' + result.links);
+  });
