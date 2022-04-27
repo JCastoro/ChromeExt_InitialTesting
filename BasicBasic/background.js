@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener(
     chrome.storage.local.get(['links'], function(result) {
       let numLinksFollowed = result.links.length;
       console.log(numLinksFollowed);
-      if(numLinksFollowed > 3){
+      if(numLinksFollowed > 1){
         chrome.tabs.create({
           url: 'popupWindow/Test_popup.html'
         });

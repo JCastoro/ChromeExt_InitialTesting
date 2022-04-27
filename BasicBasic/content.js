@@ -8,6 +8,7 @@
 
 console.log("Chrome Extension Active V_2.1!");
 let pageURL = document.URL;
+console.log(pageURL);
 let currStorage = [];
 let newStorage = [];
 
