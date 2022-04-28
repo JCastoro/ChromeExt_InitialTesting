@@ -6,7 +6,7 @@ console.log("did test_popup file run");
 window.addEventListener("load", function () {
     // do things after the DOM loads fully
     console.log("Everything is loaded");
-    
+
     //pulling stored links from memory
     chrome.storage.local.get(['links'], function(result) {
         var visitedSites = result.links;
@@ -20,9 +20,17 @@ window.addEventListener("load", function () {
             li.innerText = item;
             list.appendChild(li);
           })
-
-
         });
-  });
+  
+    //listen for if an emotion button is clicked on HTML
+    chrome.storage.local.get(['emotion'], function(result) {
+        
+    
+    });
+    
+        //add answer to correct response list
+        
+        
+});
 
 // Will have 5 buttons in HMTL with listeners in background script for emotional survey

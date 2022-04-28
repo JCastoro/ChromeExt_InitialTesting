@@ -4,14 +4,25 @@
 
 //bakground script 
 // is listening for events which happen when using chrome as a piece of software itself 
-
-
 console.log("Chrome Extension Active V_2.1!");
 let pageURL = document.URL;
-console.log(pageURL);
 let currStorage = [];
 let newStorage = [];
 
+//Will get all the elements from HTML which match class of suggestion vid
+console.log(document.getElementsByClassName("extended style-scope ytd-compact-video-renderer"));
+
+window.addEventListener("DOMContentLoaded", function(e) {
+  console.log("contentLoaded");
+  var rabbitHoleElements = document.getElementsByClassName("extended style-scope ytd-compact-video-renderer");
+  console.log(document.getElementsByClassName("extended style-scope ytd-compact-video-renderer").length);
+  console.log(rabbitHoleElements.length);
+  console.log("LIST", rabbitHoleElements);
+});
+
+
+//yt-interaction
+//yt-interaction#interaction.extended.style-scope.ytd-compact-video-renderer
 //message creation - This could hold more info
 var tabInfo = {
     url: "Youtube.com",
@@ -47,12 +58,12 @@ chrome.storage.local.get(['links'], function(result) {
 
     //storage object set as new appended list
     // FOR OUR application it can just set a new list as the rabbithole Links
+        //TODO: I can move this outside of this nested get call I think
     chrome.storage.local.set({links: newStorage}, function() {
       console.log('Storage updated to ' + newStorage);
       console.log('OLD Storage Was ' + currStorage);
       });
   });
-
 
 
 
