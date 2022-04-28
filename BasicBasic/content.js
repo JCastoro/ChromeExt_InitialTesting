@@ -13,14 +13,30 @@ let currStorage = [];
 let newStorage = [];
 
 //message creation - This could hold more info
-let tabInfo = {
-    url: "Youtube.com"
+var tabInfo = {
+    url: "Youtube.com",
+    reason: ""
 }
+
 
 //get the storage object
 chrome.storage.local.get(['links'], function(result) {
   console.log('Stored Values currently are ' + result.links);
+ 
+  //locally save storage list
   currStorage = result.links;
+
+  if( currStorage.indexOf(pageURL) > -1 ) {
+    tabInfo.reason = "urlSeenBefore";
+
+    chrome.runtime.sendMessage(tabInfo, function(response) {
+      console.log("Telling background url has been seen before");
+
+    });
+
+
+}
+
   //update the list that is being stored
   newStorage = [...currStorage, pageURL];
 });
@@ -33,6 +49,7 @@ chrome.storage.local.get(['links'], function(result) {
     // FOR OUR application it can just set a new list as the rabbithole Links
     chrome.storage.local.set({links: newStorage}, function() {
       console.log('Storage updated to ' + newStorage);
+      console.log('OLD Storage Was ' + currStorage);
       });
   });
 

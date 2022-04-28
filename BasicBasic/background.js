@@ -19,14 +19,17 @@ chrome.runtime.onMessage.addListener(
     //storing content pages URL
     currContentPageURL = sender.tab.url;
     //if sender URL is in our stored list
-    if (request.url === "Youtube.com"){//this is placeholder for now
+    if (request.reason === "urlSeenBefore"){
       //increment rabbitHole counter by 1
+      chrome.tabs.create({
+        url: 'popupWindow/Test_popup.html'
+      });
     }        
     //if rabbithole counter > (some tolerance)
     chrome.storage.local.get(['links'], function(result) {
       let numLinksFollowed = result.links.length;
       console.log(numLinksFollowed);
-      if(numLinksFollowed > 1){
+      if(numLinksFollowed > 4){
         chrome.tabs.create({
           url: 'popupWindow/Test_popup.html'
         });
