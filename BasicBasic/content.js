@@ -5,29 +5,28 @@
 //bakground script 
 // is listening for events which happen when using chrome as a piece of software itself 
 console.log("Chrome Extension Active V_2.1!");
-let pageURL = document.URL;
+
 let currStorage = [];
 let newStorage = [];
+let pageURL = document.URL;
 
-//Will get all the elements from HTML which match class of suggestion vid
-console.log(document.getElementsByClassName("extended style-scope ytd-compact-video-renderer"));
+var tabInfo = {
+  url: "Youtube.com",
+  reason: ""
+}
 
-window.addEventListener("DOMContentLoaded", function(e) {
-  console.log("contentLoaded");
-  var rabbitHoleElements = document.getElementsByClassName("extended style-scope ytd-compact-video-renderer");
-  console.log(document.getElementsByClassName("extended style-scope ytd-compact-video-renderer").length);
-  console.log(rabbitHoleElements.length);
-  console.log("LIST", rabbitHoleElements);
+//gets HTML video element for main video
+let mainVid = document.getElementsByClassName("video-stream html5-main-video")[0];
+
+mainVid.addEventListener('loadeddata', (event) => {
+  console.log("VideoLoaded");
+  let pageURL = document.URL;
+  console.log("content LoadedDOC: " + pageURL);
+
 });
 
-
-//yt-interaction
-//yt-interaction#interaction.extended.style-scope.ytd-compact-video-renderer
 //message creation - This could hold more info
-var tabInfo = {
-    url: "Youtube.com",
-    reason: ""
-}
+
 
 
 //get the storage object

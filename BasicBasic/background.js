@@ -54,9 +54,9 @@ chrome.runtime.onMessage.addListener(
       let numLinksFollowed = result.links.length;
       console.log(numLinksFollowed);
       if(numLinksFollowed > 4){
-        chrome.tabs.create({
-          url: 'popupWindow/Test_popup.html'
-        });
+        // chrome.tabs.create({
+        //   url: 'popupWindow/Test_popup.html'
+        // });
       }
     });
 
