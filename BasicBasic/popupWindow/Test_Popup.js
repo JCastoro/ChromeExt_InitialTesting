@@ -25,7 +25,6 @@ window.addEventListener("load", function () {
 
     //button setup
     for(var b=0;b<(buttons.length);b++){
-        //console.log(buttons[b]);
         let curEle = buttons[b];
         curEle.addEventListener("click",function (){
             updateHTML();
@@ -33,30 +32,17 @@ window.addEventListener("load", function () {
                 buttons[b].disabled = "disabled";
             }
             
-
-            //console.log(this.value);
             let butVal = this.value;
             let currStorage = butVal;
-            chrome.storage.local.get(['emotions'], function(result) {
-                //locally save storage list
-                var data = result.emotions;
-                data.push(currStorage);
-                //console.log(data);
-    
-                //update the list that is being stored
-                chrome.storage.local.set({emotions: data}, function() {
-                    //console.log('Storage updated to ' + data);
-                    //console.log(data.length);
-                });
-            });
-            //window.close();
+         
+            //saves selected button to storage
+            saveToStorage(currStorage);
         });
     }
-
-        //add answer to correct response list
-        
+      
         
 });
+
 
 
 function updateHTML(){
@@ -82,5 +68,18 @@ function updateHTML(){
     });
 }
 
+//takes an integer and adds it to emotion storage.
+function saveToStorage(dataToSave){
+    chrome.storage.local.get(['emotions'], function(result) {
+        //locally save storage list
+        var data = result.emotions;
+        data.push(dataToSave);
 
-// Will have 5 buttons in HMTL with listeners in background script for emotional survey
+
+        //update the list that is being stored
+        chrome.storage.local.set({emotions: data}, function() {
+            //console.log('Storage updated to ' + data);
+            //console.log(data.length);
+        });
+    });
+}
