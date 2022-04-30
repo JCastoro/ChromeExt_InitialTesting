@@ -2,7 +2,7 @@ console.log("Background Running");
 //do i need to check if this exists in the background storage first?? Will this wipe storage
 //after chrome is closed??
 let links_seen = [];
-let emotion_surveys = [1];
+let emotion_surveys = [];
 
 
 //basic storage setup
@@ -22,44 +22,19 @@ chrome.storage.local.get(['emotions'], function(result) {
 //When background recieves a message from content page
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+    const RABBIT_HOLE_LIMIT = 3;
     //storing content pages URL
     currContentPageURL = sender.tab.url;
     //if sender URL is in our stored list
-    if (request.reason === "urlSeenBefore"){
+
+    console.log("RHLEN"+ request.RHLen);
+
+    if (request.RHLen > RABBIT_HOLE_LIMIT){
       //increment rabbitHole counter by 1
-
-      //new page
-      // chrome.tabs.create({
-      //   url: 'popupWindow/Test_popup.html'
-      // });
-      
-
-      //popup force open is not yet available 
-      //chrome.action.openPopup();
+      chrome.tabs.create({
+        url: 'popupWindow/Test_popup.html'
+      });
     } 
-    console.log('pages URL is: ' + currContentPageURL);
-    if (currContentPageURL.includes("https://www.youtube.com/")){
-      //increment rabbitHole counter by 1
-
-      //new page
-      // chrome.tabs.create({
-      //   url: 'popupWindow/Test_popup.html'
-      // });
-
-    }      
-
-
-    //if rabbithole counter > (some tolerance)
-    chrome.storage.local.get(['links'], function(result) {
-      let numLinksFollowed = result.links.length;
-      console.log(numLinksFollowed);
-      if(numLinksFollowed > 4){
-        // chrome.tabs.create({
-        //   url: 'popupWindow/Test_popup.html'
-        // });
-      }
-    });
-
   }
 );
 
