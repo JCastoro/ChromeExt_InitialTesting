@@ -22,7 +22,7 @@ chrome.storage.local.get(['emotions'], function(result) {
 //When background recieves a message from content page
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    const RABBIT_HOLE_LIMIT = 3;
+    const RABBIT_HOLE_LIMIT = 2;
     //storing content pages URL
     currContentPageURL = sender.tab.url;
     //if sender URL is in our stored list
@@ -37,6 +37,11 @@ chrome.runtime.onMessage.addListener(
     } 
   }
 );
+
+
+
+
+
 
 /*
        Plan for emotion

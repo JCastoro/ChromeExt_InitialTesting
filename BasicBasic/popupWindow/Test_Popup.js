@@ -1,6 +1,10 @@
 
 //need to wait for dom to load
+
+
+
 window.addEventListener("load", function () {
+    updateHTML();
     //pulling stored links from memory
     chrome.storage.local.get(['links'], function(result) {
         var visitedSites = result.links;
@@ -16,86 +20,67 @@ window.addEventListener("load", function () {
         });
 
 
-        //pulling emotion data from memory
-    // chrome.storage.local.get(['emotion'], function(result) {
-    //     var emotionList = result;
-    //     console.log(emotionList);
-    //     console.log(emotionList[0]);
-
-    //     console.log("length: "+ emotionList);
-
-    //     emotionList.forEach((item)=>{
-    //         console.log(item);
-    //         })
-    //     });
-
-    //listen for if an emotion button is clicked on HTML
-    // let b1 = document.getElementById("1");
-    // b1.addEventListener("click",function (){
-    //     alert("pressed");
-    // });
-
     var buttons = this.document.getElementsByClassName("emotion");
-    //console.log(buttons);
 
 
-    //if 1 is pressed WORKING
-    buttons[0].addEventListener("click",function (){
-        console.log(this.value);
-        //let emotionResponse = this.value;
-        let currStorage = 1;
-        //get the storage object
-        chrome.storage.local.get(['emotions'], function(result) {
-            //locally save storage list
-            var data = result.emotions;
-            data.push(currStorage);
-            console.log(data);
+    //button setup
+    for(var b=0;b<(buttons.length);b++){
+        //console.log(buttons[b]);
+        let curEle = buttons[b];
+        curEle.addEventListener("click",function (){
+            updateHTML();
+            for(var b=0;b<(buttons.length);b++){
+                buttons[b].disabled = "disabled";
+            }
+            
 
-            //update the list that is being stored
-            chrome.storage.local.set({emotions: data}, function() {
-                console.log('Storage updated to ' + data);
-                console.log(data.length);
-            });
-        });
-    });
-
-
-
-
-    // for(var b in buttons){
-    //     //console.log(buttons[b]);
-    //     var curEle = buttons[b];
-    //     curEle.addEventListener("click",function (){
-    //         console.log(this.value);
-    //         let emotionResponse = this.value;
-    //         let currStorage = [];
-    //         let newStorage = [];
-
-
-    //         //get the storage object
-    //         chrome.storage.local.get(['emotions'], function(result) {
-    //             //locally save storage list
-    //             currStorage = result.emotion_surveys;
-    //             //update the list that is being stored
-    //             newStorage = [...currStorage, pageURL];
-
-    //             chrome.storage.local.set({emotions: newStorage}, function() {
-    //                 console.log('OLD Storage Was ' + currStorage);
-    //                 console.log('Storage updated to ' + newStorage);
-    //             });
-
-    // });
-
-
-
-    //     });
-    // }
-
-   
+            //console.log(this.value);
+            let butVal = this.value;
+            let currStorage = butVal;
+            chrome.storage.local.get(['emotions'], function(result) {
+                //locally save storage list
+                var data = result.emotions;
+                data.push(currStorage);
+                //console.log(data);
     
+                //update the list that is being stored
+                chrome.storage.local.set({emotions: data}, function() {
+                    //console.log('Storage updated to ' + data);
+                    //console.log(data.length);
+                });
+            });
+            //window.close();
+        });
+    }
+
         //add answer to correct response list
         
         
 });
+
+
+function updateHTML(){
+    chrome.storage.local.get(['emotions'], function(result) {
+        let data = result.emotions;
+        let arrLen = data.length;
+        //console.log(arrLen);
+        var sum=0;
+        for(var entry in data){
+            let val = parseInt(data[entry]);
+            //console.log(val);
+            sum+= val;
+        }
+        var averageEmotion = sum/arrLen;
+        var text = "Average Emotional score while in rabbit hole: " + averageEmotion.toString();
+    
+        var paragraph = document.getElementById("emotionScore");
+    
+        if(averageEmotion)
+            paragraph.innerHTML = text;
+        console.log("Current Averaeg: " + averageEmotion);
+    
+    });
+}
+
 
 // Will have 5 buttons in HMTL with listeners in background script for emotional survey
