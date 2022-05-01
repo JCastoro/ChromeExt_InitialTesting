@@ -19,16 +19,75 @@ chrome.storage.local.get(['emotions'], function(result) {
   console.log('Stored Values currently are: ' + result.emotions);
 });
 
+
+
+
+//bookmark Setup
+// chrome.bookmarks.onCreated.addListener(function handleCreated(id, node) {
+//     console.log(`CREATED tab ${id} on ${node.parentId}`);
+// });  
+
+
+// let CreateDetails = {
+//     'title': "TheGoodStuff",
+//     'parentId': '1'
+// }
+
+// var global = "test";
+// var bkmrkID;
+// chrome.bookmarks.create(CreateDetails,function created(result){
+//         bkmrkID = result.id;
+//         console.log(bkmrkID);
+//         global = "inside";
+//         console.log(global);
+// });
+
+
+//playing with promises
+// var mybkmrk = chrome.bookmarks.get(bkmrkID,function(mybkmrk){
+//     //console.log(mybkmrk.id);//doesnt work
+// });
+
+// function good(){
+//     console.log("good");
+// }
+// function bad(){
+//     console.log("bad");
+// }
+
+
+
+// change URL to title
+// have some good content as fake links, not connected to JS, in HTML
+
+
+
 //When background recieves a message from content page
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     const RABBIT_HOLE_LIMIT = 2;
+
     //storing content pages URL
     currContentPageURL = sender.tab.url;
+    currContentPageTitle = sender.tab.title;
+
+    //updating storage
+      //get the storage object
+  chrome.storage.local.get(['links'], function(result) {
+    //locally save storage list
+    currStorage = result.links;
+    //update the list that is being stored
+    newStorage = [...currStorage, currContentPageTitle];
+
+    chrome.storage.local.set({links: newStorage}, function() {
+      console.log('OLD Storage Was ' + currStorage);
+      console.log('Storage updated to ' + newStorage);
+      });
+
+  });
+
     //if sender URL is in our stored list
-
     console.log("RHLEN"+ request.RHLen);
-
     if (request.RHLen > RABBIT_HOLE_LIMIT){
       //increment rabbitHole counter by 1
       chrome.tabs.create({
@@ -37,8 +96,6 @@ chrome.runtime.onMessage.addListener(
     } 
   }
 );
-
-
 
 
 

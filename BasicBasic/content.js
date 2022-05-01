@@ -30,35 +30,36 @@ for(var i = 0; i < contents.length; i++) {
 let mainVid = document.getElementsByClassName("video-stream html5-main-video")[0];
 var Rhole = 0;
 
+
 //IF the main video changes, AKA user is staying in rabbithole.
 mainVid.addEventListener('loadeddata', (event) => {
+
   let pageURL = document.URL;
   tabInfo.reason = "rabbit";
   tabInfo.url = pageURL;
   tabInfo.RHLen +=1;
 
-  //get the storage object
-  chrome.storage.local.get(['links'], function(result) {
-    //locally save storage list
-    currStorage = result.links;
-    
-
-    chrome.runtime.sendMessage(tabInfo, function(response) {
-      console.log("Telling background we have entered rabbitHole");
-
-    });
- 
-    //update the list that is being stored
-    newStorage = [...currStorage, pageURL];
-
-    chrome.storage.local.set({links: newStorage}, function() {
-      console.log('OLD Storage Was ' + currStorage);
-      console.log('Storage updated to ' + newStorage);
-      });
+  chrome.runtime.sendMessage(tabInfo, function(response) {
+    console.log("Telling background we have entered rabbitHole");
 
   });
 
+  
+  
+  
+  //get the storage object
+//   chrome.storage.local.get(['links'], function(result) {
+//     //locally save storage list
+//     currStorage = result.links;
+//     //update the list that is being stored
+//     newStorage = [...currStorage, pageURL];
 
+//     chrome.storage.local.set({links: newStorage}, function() {
+//       console.log('OLD Storage Was ' + currStorage);
+//       console.log('Storage updated to ' + newStorage);
+//       });
+
+//   });
 });
 
 //message passed to background
