@@ -1,9 +1,7 @@
 console.log("Background Running");
-//do i need to check if this exists in the background storage first?? Will this wipe storage
-//after chrome is closed??
+
 let links_seen = [];
 let emotion_surveys = [];
-
 
 //basic storage setup
 chrome.storage.local.set({links: links_seen}, function() {
@@ -18,47 +16,6 @@ chrome.storage.local.set({emotions: emotion_surveys}, function() {
 chrome.storage.local.get(['emotions'], function(result) {
   console.log('Stored Values currently are: ' + result.emotions);
 });
-
-
-
-
-//bookmark Setup
-// chrome.bookmarks.onCreated.addListener(function handleCreated(id, node) {
-//     console.log(`CREATED tab ${id} on ${node.parentId}`);
-// });  
-
-
-// let CreateDetails = {
-//     'title': "TheGoodStuff",
-//     'parentId': '1'
-// }
-
-// var global = "test";
-// var bkmrkID;
-// chrome.bookmarks.create(CreateDetails,function created(result){
-//         bkmrkID = result.id;
-//         console.log(bkmrkID);
-//         global = "inside";
-//         console.log(global);
-// });
-
-
-//playing with promises
-// var mybkmrk = chrome.bookmarks.get(bkmrkID,function(mybkmrk){
-//     //console.log(mybkmrk.id);//doesnt work
-// });
-
-// function good(){
-//     console.log("good");
-// }
-// function bad(){
-//     console.log("bad");
-// }
-
-
-
-// change URL to title
-// have some good content as fake links, not connected to JS, in HTML
 
 
 
@@ -91,7 +48,7 @@ chrome.runtime.onMessage.addListener(
     if (request.RHLen > RABBIT_HOLE_LIMIT){
       //increment rabbitHole counter by 1
       chrome.tabs.create({
-        url: 'popupWindow/Test_popup.html'
+        url: 'popupWindow/index.html'
       });
     } 
   }
@@ -100,8 +57,12 @@ chrome.runtime.onMessage.addListener(
 
 
 
+
+
+
+
 /*
-       Plan for emotion
+                 Plan for emotion
 
 Background listens to content page
 - if rabbitHole condition
@@ -115,4 +76,38 @@ Background listens to content page
 
 On HTML display the different emotional ratings and show averages for
 both categories
+
+--------------------------------------------
+            bookmark Setup
+chrome.bookmarks.onCreated.addListener(function handleCreated(id, node) {
+    console.log(`CREATED tab ${id} on ${node.parentId}`);
+});  
+
+
+let CreateDetails = {
+    'title': "TheGoodStuff",
+    'parentId': '1'
+}
+
+var global = "test";
+var bkmrkID;
+chrome.bookmarks.create(CreateDetails,function created(result){
+        bkmrkID = result.id;
+        console.log(bkmrkID);
+        global = "inside";
+        console.log(global);
+});
+
+
+playing with promises
+var mybkmrk = chrome.bookmarks.get(bkmrkID,function(mybkmrk){
+    //console.log(mybkmrk.id);//doesnt work
+});
+
+function good(){
+    console.log("good");
+}
+function bad(){
+    console.log("bad");
+}
 */

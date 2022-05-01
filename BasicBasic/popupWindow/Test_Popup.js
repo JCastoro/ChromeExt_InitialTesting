@@ -25,6 +25,7 @@ window.addEventListener("load", function () {
 
     //button setup
     for(var b=0;b<(buttons.length);b++){
+        
         let curEle = buttons[b];
         curEle.addEventListener("click",function (){
             updateHTML();

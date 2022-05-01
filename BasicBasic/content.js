@@ -20,6 +20,7 @@ var tabInfo = {
   RHLen: 0
 }
 
+//Adding event listeners for each rabbithole link
 for(var i = 0; i < contents.length; i++) {
   contents[i].addEventListener("click", (event)=>{
     Rhole+=1;
@@ -29,7 +30,6 @@ for(var i = 0; i < contents.length; i++) {
 //gets HTML video element for main video
 let mainVid = document.getElementsByClassName("video-stream html5-main-video")[0];
 var Rhole = 0;
-
 
 //IF the main video changes, AKA user is staying in rabbithole.
 mainVid.addEventListener('loadeddata', (event) => {
@@ -41,7 +41,6 @@ mainVid.addEventListener('loadeddata', (event) => {
 
   chrome.runtime.sendMessage(tabInfo, function(response) {
     console.log("Telling background we have entered rabbitHole");
-
   });
 
   
