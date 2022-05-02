@@ -6,6 +6,8 @@
 // is listening for events which happen when using chrome as a piece of software itself 
 console.log("Chrome Extension Active V_2.1!");
 
+
+
 let currStorage = [];
 let newStorage = [];
 let pageURL = document.URL;
@@ -33,8 +35,9 @@ var Rhole = 0;
 
 //IF the main video changes, AKA user is staying in rabbithole.
 mainVid.addEventListener('loadeddata', (event) => {
-
+  console.log("frame changed");
   let pageURL = document.URL;
+
   tabInfo.reason = "rabbit";
   tabInfo.url = pageURL;
   tabInfo.RHLen +=1;

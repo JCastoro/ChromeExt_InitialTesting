@@ -26,7 +26,10 @@ chrome.runtime.onMessage.addListener(
 
     //storing content pages URL
     currContentPageURL = sender.tab.url;
+    
     currContentPageTitle = sender.tab.title;
+    console.log(currContentPageURL);
+    console.log(currContentPageTitle);
 
     //updating storage
       //get the storage object
@@ -34,17 +37,21 @@ chrome.runtime.onMessage.addListener(
     //locally save storage list
     currStorage = result.links;
     //update the list that is being stored
+    if(currStorage.includes(currContentPageTitle)){
+      console.log("repeat");
+    }
+    else{
     newStorage = [...currStorage, currContentPageTitle];
-
     chrome.storage.local.set({links: newStorage}, function() {
-      console.log('OLD Storage Was ' + currStorage);
-      console.log('Storage updated to ' + newStorage);
+      // console.log('OLD Storage Was ' + currStorage);
+      // console.log('Storage updated to ' + newStorage);
       });
-
+    }
+    
   });
 
-    //if sender URL is in our stored list
-    console.log("RHLEN"+ request.RHLen);
+    //if we are past rabbit hole limit
+    //console.log("RHLEN"+ request.RHLen);
     if (request.RHLen % RABBIT_HOLE_LIMIT == 0){
       //increment rabbitHole counter by 1
       chrome.tabs.create({
