@@ -24,13 +24,14 @@ window.addEventListener("load", function () {
 
 
     //button setup
-    for(var b=0;b<(buttons.length);b++){
+    for(var b=1;b<=5;b++){
         
-        let curEle = buttons[b];
+        let curEle = this.document.getElementById(b.toString());
         curEle.addEventListener("click",function (){
             updateHTML();
-            for(var b=0;b<(buttons.length);b++){
-                buttons[b].disabled = "disabled";
+            for(var b=1;b<=5;b++){
+                let button = document.getElementById(b.toString());
+                button.disabled = "disabled";
             }
             
             let butVal = this.value;
@@ -58,13 +59,19 @@ function updateHTML(){
             sum+= val;
         }
         var averageEmotion = sum/arrLen;
-        var text = "Average Emotional score while in rabbit hole: " + averageEmotion.toString();
+        var emotionScore = Math.round(averageEmotion)-1;//minus 1 accounts for button array start@ 0
+        var text = "Average Emotional score";
     
         var paragraph = document.getElementById("emotionScore");
     
-        if(averageEmotion)
+        if(averageEmotion){
             paragraph.innerHTML = text;
-        console.log("Current Averaeg: " + averageEmotion);
+            var svg = document.getElementsByTagName('svg')[5]; //Get svg element
+            var target = document.getElementsByTagName('svg')[emotionScore]; //Get svg element
+            var copy = target.cloneNode(true);
+            svg.appendChild(copy);
+            
+        }
     
     });
 }

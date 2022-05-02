@@ -43,22 +43,6 @@ mainVid.addEventListener('loadeddata', (event) => {
     console.log("Telling background we have entered rabbitHole");
   });
 
-  
-  
-  
-  //get the storage object
-//   chrome.storage.local.get(['links'], function(result) {
-//     //locally save storage list
-//     currStorage = result.links;
-//     //update the list that is being stored
-//     newStorage = [...currStorage, pageURL];
-
-//     chrome.storage.local.set({links: newStorage}, function() {
-//       console.log('OLD Storage Was ' + currStorage);
-//       console.log('Storage updated to ' + newStorage);
-//       });
-
-//   });
 });
 
 //message passed to background

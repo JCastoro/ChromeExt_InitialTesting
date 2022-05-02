@@ -22,7 +22,7 @@ chrome.storage.local.get(['emotions'], function(result) {
 //When background recieves a message from content page
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    const RABBIT_HOLE_LIMIT = 2;
+    const RABBIT_HOLE_LIMIT = 4;
 
     //storing content pages URL
     currContentPageURL = sender.tab.url;
@@ -45,12 +45,13 @@ chrome.runtime.onMessage.addListener(
 
     //if sender URL is in our stored list
     console.log("RHLEN"+ request.RHLen);
-    if (request.RHLen > RABBIT_HOLE_LIMIT){
+    if (request.RHLen % RABBIT_HOLE_LIMIT == 0){
       //increment rabbitHole counter by 1
       chrome.tabs.create({
         url: 'popupWindow/index.html'
       });
-    } 
+    }
+
   }
 );
 
